@@ -1,19 +1,24 @@
 package dcf.script.init;
 
 import static org.testng.Assert.assertNotNull;
-
+import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
-
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import dcf.script.utility.CommonUtil;
 import dcf.script.utility.ExcelReader;
 import io.github.bonigarcia.wdm.OperatingSystem;
@@ -21,9 +26,13 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class Init 
 {
+	public static SoftAssert soft;
 	public static RemoteWebDriver driver;
 	private static Properties properties;
-	public RemoteWebDriver getDriver() 
+	public static boolean goCards = true;
+	public static ExcelReader reader=new ExcelReader();
+	
+	public static RemoteWebDriver getDriver() 
 	{
 		return Init.driver;
 	}
@@ -40,6 +49,7 @@ public class Init
 	
 	public static void setChromeDriver() throws Exception 
 	{
+		soft= new SoftAssert();
 		String rmDriver = System.getProperty("rmDriver");
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("start-fullscreen");
@@ -52,6 +62,7 @@ public class Init
 		driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
 		setDriver(driver);
 		driver.get(properties.getProperty("URL"));
+		soft.assertTrue(driver.findElement(By.id("mockIamTitle")).getText().equalsIgnoreCase("Mock IAM"));
 	}
 	
 	public static void roleselection() throws InterruptedException
@@ -74,29 +85,39 @@ public class Init
 		if(envroles.contains("Admin"))
 		{
 			driver.findElement(By.xpath(".//*[@id='radioUser']//input")).click();	
-			// Clicking on Select Button
 			WebElement BtnSelect = driver.findElement(By.id("btnSelectWorkspace"));
 			assertNotNull(BtnSelect);
 			BtnSelect.click();
 		}
 	}
 	
-	public static void iconselection(String iconNameValue)
+	public static void iconselection(String iconNameValue) throws InterruptedException
 	{
-		List <WebElement> elHomeIconNodes= driver.findElementsByCssSelector("div.lp-icons div.lp-icon-item div.lp-text");
-		boolean iconFound = false;
-		ExcelReader reader=new ExcelReader();
-		reader.getCellData(iconNameValue);
-		for (WebElement ChildNode : elHomeIconNodes) 
+		CommonUtil.waitForPageLoadMsgToBeInvisible("loading...");
+		driver.switchTo().defaultContent();
+		CommonUtil.waitForElementToBe(By.cssSelector("iframe[id^='LaunchpadModule-']"), "CLICKABLE", driver, 30);
+		driver.switchTo().frame(driver.findElement(By.cssSelector("iframe[id^='LaunchpadModule-']")));	
+		List<WebElement> elHomeIconNodes = driver.findElements(By.xpath("//div[contains(@class, 'lp-icons')]/div/div[contains(@class,'lp-icon-item')]"));
+		System.out.println(elHomeIconNodes.size());
+		for(int i=0; i<elHomeIconNodes.size(); i++)
 		{
-			if (ChildNode.getText().equalsIgnoreCase(iconNameValue)) 
+			if(elHomeIconNodes.get(i).getText().equalsIgnoreCase(iconNameValue))
 			{
-				WebElement el = ChildNode.findElement(By.xpath(".."));
-				assertNotNull(el);
-				el.click();
-				iconFound = true;
+				elHomeIconNodes.get(i).click();
 				break;
 			}
+			
 		}
 	}
+	
+//clk to add remove cards
+			public static void clickaddremovecards() throws InterruptedException
+			{
+				driver.switchTo().defaultContent();
+				CommonUtil.waitForElementToBe(By.cssSelector("iframe[id^='ConnectMobileModule-1']"), "CLICKABLE", driver, 30);
+				driver.switchTo().frame(driver.findElement(By.cssSelector("iframe[id^='ConnectMobileModule-1']")));	
+				driver.findElement(By.id("ext-element-554")).click();
+				driver.findElement(By.id("ext-element-577")).click();
+				driver.findElement(By.id("ext-element-604")).click();
+			}
 }
