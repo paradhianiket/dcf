@@ -49,7 +49,7 @@ public class ExcelReader extends CommonUtil
 		{
 			int colcount;
 			colcount=sheet.getRow(0).getLastCellNum()-sheet.getRow(0).getFirstCellNum();
-			System.out.println(colcount);
+			//System.out.println(colcount);
 			return colcount;
 		}
 		
