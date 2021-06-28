@@ -121,3 +121,4 @@ public class Init
 				driver.findElement(By.id("ext-element-604")).click();
 			}
 }
+

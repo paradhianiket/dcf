@@ -7,15 +7,14 @@ import dcf.script.utility.ExcelReader;
 
 public class CA01_Testng extends Init
 {
-	 public static final String CaseIcon = null;
-	ExcelReader reader=new ExcelReader();
   @Test
   public void loginandroles() throws Exception
 	{
 	  lprop();
 	  setChromeDriver();
 	  roleselection();
-	  iconselection(CaseIcon);
+	  iconselection("Create Precharge Case");
+	  clickaddremovecards();
 	}
 
 }
