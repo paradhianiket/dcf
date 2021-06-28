@@ -15,7 +15,8 @@ public class CA01_Testng extends Init
 	  lprop();
 	  setChromeDriver();
 	  roleselection();
-	  iconselection(CaseIcon);
+	  iconselection("Create Precharge Case");
+	  clickaddremovecards();
 	}
 
 }
