@@ -70,6 +70,9 @@ public FileInputStream fisexcelreader()
 			sheet = workbook.getSheet(sheetName);
 			Row = sheet.getRow(0);
 			colcount=Row.getLastCellNum();
+			int colcount;
+			colcount=sheet.getRow(0).getLastCellNum()-sheet.getRow(0).getFirstCellNum();
+			//System.out.println(colcount);
 			return colcount;
 		}
 //return sheetname

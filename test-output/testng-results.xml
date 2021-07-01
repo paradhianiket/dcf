@@ -2,6 +2,7 @@
 <testng-results ignored="0" total="1" passed="0" failed="1" skipped="0">
   <reporter-output>
   </reporter-output>
+<<<<<<< HEAD
   <suite started-at="2021-07-01T05:51:01 BST" name="Default suite" finished-at="2021-07-01T05:56:12 BST" duration-ms="311118">
     <groups>
     </groups>
@@ -71,6 +72,14 @@ at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
 ]]>
             </full-stacktrace>
           </exception> <!-- org.openqa.selenium.ElementClickInterceptedException -->
+=======
+  <suite started-at="2021-06-28T11:11:58 BST" name="Default suite" finished-at="2021-06-28T11:13:33 BST" duration-ms="94938">
+    <groups>
+    </groups>
+    <test started-at="2021-06-28T11:11:58 BST" name="Default test" finished-at="2021-06-28T11:13:33 BST" duration-ms="94938">
+      <class name="dcf.script.stepdef.CA01_Testng">
+        <test-method signature="loginandroles()[pri:0, instance:dcf.script.stepdef.CA01_Testng@1ce61929]" started-at="2021-06-28T11:11:58 BST" name="loginandroles" finished-at="2021-06-28T11:13:33 BST" duration-ms="94907" status="PASS">
+>>>>>>> 751c8594a64ce51a242933888abb59d98669145c
           <reporter-output>
           </reporter-output>
         </test-method> <!-- loginandroles -->
