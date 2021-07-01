@@ -114,12 +114,6 @@ public class Init
 			
 		}
 	}
-	
-//clk to add remove cards
-			public static void clickaddremovecards() throws InterruptedException
-			{
-				CommonUtil.gotitbtn();
-			}
 			
 //togetcard
 			public static void cardlist()

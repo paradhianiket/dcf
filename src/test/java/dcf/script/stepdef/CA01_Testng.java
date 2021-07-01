@@ -16,7 +16,6 @@ public class CA01_Testng extends Init
 	  setChromeDriver();
 	  roleselection();
 	  iconselection("Create Precharge Case");
-	  clickaddremovecards();
 	  cardlist();
 	}
 }
