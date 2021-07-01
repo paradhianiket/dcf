@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -216,6 +217,16 @@ public class CommonUtil
 //gotitibutton
 		public static void gotitbtn()
 		{ 
-			waitForElementToBe(By.xpath(properties.getProperty("gotitbtn")), "CLICKABLE", Init.driver, 90);
+			Init.driver.switchTo().defaultContent();
+			CommonUtil.waitForElementToBe(By.cssSelector(properties.getProperty("iframemobile")), "CLICKABLE", Init.driver, 30);
+			Init.driver.switchTo().frame(Init.driver.findElement(By.cssSelector(properties.getProperty("iframemobile"))));	
+			((JavascriptExecutor) Init.driver).executeScript("document.cookie=\"eag-gotitnotes-disabled=true\";");
+		}
+
+//yescardrequired
+		public static void cardrequired()
+		{
+			waitForElementToBe(By.xpath(properties.getProperty("yescardrequired")), "CLICKABLE", Init.driver, 30);
+			Init.driver.findElement(By.xpath(properties.getProperty("yescardrequired"))).click();
 		}
 }

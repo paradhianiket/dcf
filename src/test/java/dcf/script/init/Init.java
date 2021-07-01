@@ -98,9 +98,10 @@ public class Init
 	public static void iconselection(String iconNameValue) throws InterruptedException
 	{
 		CommonUtil.waitForPageLoadMsgToBeInvisible("loading...");
+		CommonUtil.gotitbtn();
 		driver.switchTo().defaultContent();
 		CommonUtil.waitForElementToBe(By.cssSelector(properties.getProperty("iframe")), "CLICKABLE", driver, 30);
-		driver.switchTo().frame(driver.findElement(By.cssSelector(properties.getProperty("iframe"))));	
+		driver.switchTo().frame(driver.findElement(By.cssSelector(properties.getProperty("iframe"))));
 		List<WebElement> elHomeIconNodes = driver.findElements(By.xpath(properties.getProperty("icons")));
 		System.out.println(elHomeIconNodes.size());
 		for(int i=0; i<elHomeIconNodes.size(); i++)
@@ -117,11 +118,6 @@ public class Init
 //clk to add remove cards
 			public static void clickaddremovecards() throws InterruptedException
 			{
-				//driver.switchTo().defaultContent();
-				CommonUtil.waitForElementToBe(By.cssSelector(properties.getProperty("iframemobile")), "CLICKABLE", driver, 30);
-				driver.switchTo().frame(driver.findElement(By.cssSelector(properties.getProperty("iframemobile"))));
-				CommonUtil.gotitbtn();
-				CommonUtil.gotitbtn();
 				CommonUtil.gotitbtn();
 			}
 			
@@ -138,6 +134,8 @@ public class Init
 					if(cardvalue.toString().equalsIgnoreCase(splitStr[0]))
 					{
 						cardlist.get(i).click();
+						CommonUtil.cardrequired();
+						
 					}
 				}
 			}
