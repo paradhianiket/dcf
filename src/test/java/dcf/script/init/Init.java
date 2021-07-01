@@ -19,6 +19,9 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
+
+import com.itextpdf.text.log.SysoCounter;
+
 import dcf.script.utility.CommonUtil;
 import dcf.script.utility.ExcelReader;
 import io.github.bonigarcia.wdm.OperatingSystem;
@@ -71,12 +74,13 @@ public class Init
 		String[] listRoles = envroles.split(",");
 		for (String role : listRoles)
 		{
-			WebElement ChckElement = driver.findElement(By.xpath("//input[@type='checkbox'][@value='" + role + "']"));
-			if (ChckElement.getAttribute("checked") == null)
-			ChckElement.click();
 			Thread.sleep(500);
+			WebElement CheckElement = driver.findElement(By.xpath(properties.getProperty("CheckElement")+"[@value='" + role + "']"));
+			if (CheckElement.getAttribute("checked") == null)
+				CheckElement.click();
+				Thread.sleep(500);
 		}
-		WebElement BtnSubmit = driver.findElement(By.xpath("//input[@type='submit'][@value='Submit']"));
+		WebElement BtnSubmit = driver.findElement(By.xpath(properties.getProperty("BtnSubmit")));
 		BtnSubmit.click();
 		Thread.sleep(500);
 		WebElement BtnAccept= driver.findElement(By.id("splashScreenBtnOk")); 
@@ -84,8 +88,8 @@ public class Init
 		Thread.sleep(500);
 		if(envroles.contains("Admin"))
 		{
-			driver.findElement(By.xpath(".//*[@id='radioUser']//input")).click();	
-			WebElement BtnSelect = driver.findElement(By.id("btnSelectWorkspace"));
+			driver.findElement(By.xpath(properties.getProperty("adminradiobtn"))).click();	
+			WebElement BtnSelect = driver.findElement(By.id(properties.getProperty("btnslctid")));
 			assertNotNull(BtnSelect);
 			BtnSelect.click();
 		}
@@ -95,9 +99,9 @@ public class Init
 	{
 		CommonUtil.waitForPageLoadMsgToBeInvisible("loading...");
 		driver.switchTo().defaultContent();
-		CommonUtil.waitForElementToBe(By.cssSelector("iframe[id^='LaunchpadModule-']"), "CLICKABLE", driver, 30);
-		driver.switchTo().frame(driver.findElement(By.cssSelector("iframe[id^='LaunchpadModule-']")));	
-		List<WebElement> elHomeIconNodes = driver.findElements(By.xpath("//div[contains(@class, 'lp-icons')]/div/div[contains(@class,'lp-icon-item')]"));
+		CommonUtil.waitForElementToBe(By.cssSelector(properties.getProperty("iframe")), "CLICKABLE", driver, 30);
+		driver.switchTo().frame(driver.findElement(By.cssSelector(properties.getProperty("iframe"))));	
+		List<WebElement> elHomeIconNodes = driver.findElements(By.xpath(properties.getProperty("icons")));
 		System.out.println(elHomeIconNodes.size());
 		for(int i=0; i<elHomeIconNodes.size(); i++)
 		{
@@ -113,11 +117,28 @@ public class Init
 //clk to add remove cards
 			public static void clickaddremovecards() throws InterruptedException
 			{
-				driver.switchTo().defaultContent();
-				CommonUtil.waitForElementToBe(By.cssSelector("iframe[id^='ConnectMobileModule-1']"), "CLICKABLE", driver, 30);
-				driver.switchTo().frame(driver.findElement(By.cssSelector("iframe[id^='ConnectMobileModule-1']")));	
-				driver.findElement(By.id("ext-element-554")).click();
-				driver.findElement(By.id("ext-element-577")).click();
-				driver.findElement(By.id("ext-element-604")).click();
+				//driver.switchTo().defaultContent();
+				CommonUtil.waitForElementToBe(By.cssSelector(properties.getProperty("iframemobile")), "CLICKABLE", driver, 30);
+				driver.switchTo().frame(driver.findElement(By.cssSelector(properties.getProperty("iframemobile"))));
+				CommonUtil.gotitbtn();
+				CommonUtil.gotitbtn();
+				CommonUtil.gotitbtn();
+			}
+			
+//togetcard
+			public static void cardlist()
+			{
+				reader.getCellData("CaseIcon","CardName");
+				List <WebElement> cardlist=driver.findElements(By.xpath(properties.getProperty("cardthumbnail")));
+				for(int i=0; i<cardlist.size(); i++)
+				{
+					Object cardvalue=reader.datavalue[i][0];
+					String cardname=cardlist.get(i).getText();
+					String[] splitStr = cardname.split("\\s+");
+					if(cardvalue.toString().equalsIgnoreCase(splitStr[0]))
+					{
+						cardlist.get(i).click();
+					}
+				}
 			}
 }

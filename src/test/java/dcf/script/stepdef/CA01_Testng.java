@@ -7,7 +7,6 @@ import dcf.script.utility.ExcelReader;
 
 public class CA01_Testng extends Init
 {
-	 public static final String CaseIcon = null;
 	ExcelReader reader=new ExcelReader();
   @Test
   public void loginandroles() throws Exception
@@ -17,6 +16,6 @@ public class CA01_Testng extends Init
 	  roleselection();
 	  iconselection("Create Precharge Case");
 	  clickaddremovecards();
+	  cardlist();
 	}
-
 }

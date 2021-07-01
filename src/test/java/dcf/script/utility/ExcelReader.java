@@ -25,11 +25,31 @@ public class ExcelReader extends CommonUtil
 	public static XSSFSheet sheet;
 	public static XSSFRow Row;
 	public static XSSFCell Cell;
-	public static String datavalue;
+	public static Object[][] datavalue=null;
 	public static Object myObj;
 	public static Object myObj1;
 	public static String sheetName=null;
+	public static int rowcount=0;
+	public static int colcount=0;
 	
+//string fis
+public FileInputStream fisexcelreader() 
+{
+	String tdFileName = properties.getProperty(filename);
+	File filename1 = new File(TESTDATA_FOLDER + tdFileName);
+		try
+		{
+			fis = new FileInputStream(filename1);
+			workbook = new XSSFWorkbook(fis);
+			fis.close();
+		} 
+		catch (Exception e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return fis;
+}
 	
 // returns sheet number
 		public int getsheetnumber()
@@ -38,100 +58,57 @@ public class ExcelReader extends CommonUtil
 			return sheetnumber;
 		}
 // returns rownumber
-		public int getrownumber()
+		public int getRowCount(String sheetName)
 		{
-			int rowcount;
+			sheet = workbook.getSheet(sheetName);
 			rowcount=sheet.getPhysicalNumberOfRows();
 			return rowcount;
 		}	
 // returns colnumber
-		public int getcolnumber()
+		public int getColumnCount(String sheetName)
 		{
-			int colcount;
-			colcount=sheet.getRow(0).getLastCellNum()-sheet.getRow(0).getFirstCellNum();
-			System.out.println(colcount);
+			sheet = workbook.getSheet(sheetName);
+			Row = sheet.getRow(0);
+			colcount=Row.getLastCellNum();
 			return colcount;
 		}
-		
+//return sheetname
+		public String sheetname()
+		{
+			fisexcelreader();
+			for(int i=0; i<getsheetnumber(); i++)
+			{
+				sheet = workbook.getSheetAt(i);
+				sheetName=sheet.getSheetName();
+			}
+			return sheetName;
+			
+		}
+
 //returns the data from a cell
-		public String getCellData(String sheetName)
+		public Object[][] getCellData(String sheetName,String colName)
 		{
-			String tdFileName = properties.getProperty(filename);
-			File file = new File(TESTDATA_FOLDER + tdFileName);
-		try
-		{
-			fis = new FileInputStream(file);
-			workbook = new XSSFWorkbook(fis);
-			for(int i=0; i<getsheetnumber(); i++)
+			fisexcelreader();
+			try
 			{
-				sheet = workbook.getSheetAt(i);
-				sheetName=sheet.getSheetName();
-				//System.out.println("Row and cloumn count for sheetname "+sheetName+" are rowcount : "+getrownumber()+ " and columncount :"+getcolnumber());
-				for(int j=0; j<getcolnumber(); j++)
+				int index = workbook.getSheetIndex(sheetName);
+				sheet = workbook.getSheetAt(index);
+				int ci=0;
+				datavalue=new Object[getRowCount(sheetName)][getColumnCount(sheetName)];
+				for(int i=1; i<getRowCount(sheetName); i++, ci++)
 				{
-					String data = sheet.getRow(0).getCell(j).getStringCellValue();
-					if(data.equalsIgnoreCase("RunMode"))
+					int cj=0;
+					for(int j=0; j<getColumnCount(sheetName); j++, cj++)
 					{
-						for(int k=1; k<getrownumber(); k++)
-						{
-							String runmodevalue= sheet.getRow(k).getCell(j).getStringCellValue();
-							Row = sheet.getRow(k);
-							for(int m=0; m<getcolnumber(); m++)
-									{
-										if(runmodevalue.equalsIgnoreCase("Y"))
-										{
-											Cell= Row.getCell(m);
-											String datavalue=Row.getCell(m).getStringCellValue();
-										}
-									}
-						}
+						datavalue[ci][cj]=sheet.getRow(i).getCell(j).getStringCellValue();
+						//System.out.println(datavalue[ci][cj]);
 					}
 				}
 			}
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		return datavalue;
-		}
-		
-//to write data
-		public void outdata(String sheetName) throws IOException
-		{
-			myObj= LocalDate.now();
-			myObj1= LocalTime.now();
-			for(int i=0; i<getsheetnumber(); i++)
+			catch(Exception e)
 			{
-				sheet = workbook.getSheetAt(i);
-				sheetName=sheet.getSheetName();
-				sheet.getRow(0).createCell(getcolnumber()).setCellValue("Result_on_"+myObj+"_"+myObj1);
-				for(int j=0; j<getcolnumber(); j++)
-				{
-					String data = sheet.getRow(0).getCell(j).getStringCellValue();
-					if(data.equalsIgnoreCase("RunMode"))
-					{
-						for(int k=1; k<getrownumber(); k++)
-						{
-							String runmodevalue= sheet.getRow(k).getCell(j).getStringCellValue();
-							Row = sheet.getRow(k);
-							for(int m=0; m<getcolnumber(); m++)
-									{
-										if(runmodevalue.equalsIgnoreCase("Y"))
-										{
-											sheet.getRow(k).createCell(getcolnumber()).setCellValue("Pass");
-										}
-										else
-										{
-											sheet.getRow(k).createCell(getcolnumber()).setCellValue("Fail");
-										}
-									}
-						}
-					}
-				}
+				e.printStackTrace();
 			}
-			outputStream= new FileOutputStream(filename);
-			workbook.write(outputStream);
-			workbook.close();
-		}		
+			return datavalue;
+		}	
 }

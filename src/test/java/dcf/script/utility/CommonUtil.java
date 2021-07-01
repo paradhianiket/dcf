@@ -26,8 +26,10 @@ import dcf.script.init.Init;
 public class CommonUtil 
 {
 	public static Properties properties;
+	public static Properties properties1;
 	public static Logger Log = LogManager.getLogger();
 	public static String CONFIGS_FOLDER = "src/main/resources/Configs/";
+		public static String OBJ_FOLDER= "src/main/resources/ObjectRepository/";
 	public static final String TESTDATA_FOLDER = "src/main/resources/Testdatafiles/";
 	public static String configFileName = "Stgamo";
 	public static String testEnvironment = "";
@@ -42,8 +44,11 @@ public class CommonUtil
 				{
 					properties = new Properties();
 					InputStream input = null;
+					InputStream input1 = null;
 					input = new FileInputStream(CONFIGS_FOLDER + "Config" + configFileName + ".properties");
+					input1 = new FileInputStream(OBJ_FOLDER + "CaseOR" + ".properties");
 					properties.load(input);
+					properties.load(input1);
 				}
 			} 
 			catch (Exception e) 
@@ -58,9 +63,8 @@ public class CommonUtil
 		public static Properties loadProperties() throws Exception 
 		{
 			properties = getProperties();
-			return properties;
+			return properties;	
 		}
-
 //to add properties
 		public static void addProperties(String eventType) throws Exception 
 		{
@@ -207,5 +211,11 @@ public class CommonUtil
 				Assert.assertNull(waitForElementToBe(By.xpath("//div[@class='x-loading-spinner-outer']"), "INVISIBLE", 
 						driver, 240), "Requested card screen is not loaded");
 			}
+		}
+
+//gotitibutton
+		public static void gotitbtn()
+		{ 
+			waitForElementToBe(By.xpath(properties.getProperty("gotitbtn")), "CLICKABLE", Init.driver, 90);
 		}
 }
