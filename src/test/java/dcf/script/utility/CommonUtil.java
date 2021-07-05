@@ -22,19 +22,22 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
+
 import dcf.script.init.Init;
 
-public class CommonUtil 
+public class CommonUtil
 {
 	public static Properties properties;
 	public static Properties properties1;
 	public static Logger Log = LogManager.getLogger();
 	public static String CONFIGS_FOLDER = "src/main/resources/Configs/";
-		public static String OBJ_FOLDER= "src/main/resources/ObjectRepository/";
+	public static String OBJ_FOLDER= "src/main/resources/ObjectRepository/";
 	public static final String TESTDATA_FOLDER = "src/main/resources/Testdatafiles/";
 	public static String configFileName = "Stgamo";
 	public static String testEnvironment = "";
 	public static WebDriverWait wait;
+	public static ExcelReader reader;
 	
 //to get properties	
 		public static Properties getProperties() throws Exception 
@@ -213,13 +216,26 @@ public class CommonUtil
 						driver, 240), "Requested card screen is not loaded");
 			}
 		}
+//switch to main frame
+		public static void switchmainframe()
+		{
+			Init.driver.switchTo().defaultContent();
+			CommonUtil.waitForElementToBe(By.cssSelector(properties.getProperty("iframe")), "CLICKABLE", Init.driver, 30);
+			Init.driver.switchTo().frame(Init.driver.findElement(By.cssSelector(properties.getProperty("iframe"))));
+		}
+		
+//switch to mobileframe
+		public static void switchmobileframe()
+		{
+			Init.driver.switchTo().defaultContent();
+			CommonUtil.waitForElementToBe(By.cssSelector(properties.getProperty("iframemobile")), "CLICKABLE", Init.driver, 30);
+			Init.driver.switchTo().frame(Init.driver.findElement(By.cssSelector(properties.getProperty("iframemobile"))));	
+		}
 
 //gotitibutton
 		public static void gotitbtn()
 		{ 
-			Init.driver.switchTo().defaultContent();
-			CommonUtil.waitForElementToBe(By.cssSelector(properties.getProperty("iframemobile")), "CLICKABLE", Init.driver, 30);
-			Init.driver.switchTo().frame(Init.driver.findElement(By.cssSelector(properties.getProperty("iframemobile"))));	
+			switchmobileframe();
 			((JavascriptExecutor) Init.driver).executeScript("document.cookie=\"eag-gotitnotes-disabled=true\";");
 		}
 
@@ -229,4 +245,5 @@ public class CommonUtil
 			waitForElementToBe(By.xpath(properties.getProperty("yescardrequired")), "CLICKABLE", Init.driver, 30);
 			Init.driver.findElement(By.xpath(properties.getProperty("yescardrequired"))).click();
 		}
+
 }

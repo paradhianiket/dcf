@@ -3,14 +3,6 @@ package dcf.script.utility;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Properties;
-import java.io.InputStream;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -62,6 +54,7 @@ public FileInputStream fisexcelreader()
 		{
 			sheet = workbook.getSheet(sheetName);
 			rowcount=sheet.getPhysicalNumberOfRows();
+			//System.out.println(rowcount);
 			return rowcount;
 		}	
 // returns colnumber
@@ -69,8 +62,7 @@ public FileInputStream fisexcelreader()
 		{
 			sheet = workbook.getSheet(sheetName);
 			Row = sheet.getRow(0);
-			colcount=Row.getLastCellNum();
-			int colcount;
+			//colcount=Row.getLastCellNum();
 			colcount=sheet.getRow(0).getLastCellNum()-sheet.getRow(0).getFirstCellNum();
 			//System.out.println(colcount);
 			return colcount;
@@ -98,7 +90,7 @@ public FileInputStream fisexcelreader()
 				sheet = workbook.getSheetAt(index);
 				int ci=0;
 				datavalue=new Object[getRowCount(sheetName)][getColumnCount(sheetName)];
-				for(int i=1; i<getRowCount(sheetName); i++, ci++)
+				for(int i=0; i<getRowCount(sheetName); i++, ci++)
 				{
 					int cj=0;
 					for(int j=0; j<getColumnCount(sheetName); j++, cj++)
