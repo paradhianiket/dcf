@@ -1,10 +1,14 @@
 package dcf.script.common;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+
+import com.itextpdf.text.log.SysoCounter;
 
 import dcf.script.init.Init;
 import dcf.script.utility.CommonUtil;
@@ -18,40 +22,24 @@ public class mdrpersondetails extends CommonUtil
 		reader= new ExcelReader();
 		reader.getCellData("Person","Link type");
 		persondata=ExcelReader.datavalue;
-		List <WebElement> labels=Init.driver.findElements(By.xpath(properties.getProperty("defandantlabels")));
-		labels.size();
-		for(int i=0; i<reader.getColumnCount("Person"); i++)
-		{
-			persondata=ExcelReader.datavalue[0][i];
-			for(int j=0; j<labels.size(); j++)
+		List <WebElement> persondetails=Init.driver.findElements(By.xpath(properties.getProperty("persondetails")));
+		List <WebElement> persondetailstxtbx=Init.driver.findElements((By.xpath(properties.getProperty("persondetailstxtbox"))));
+			for(int j=0; j<persondetailstxtbx.size(); j++)
 			{
-				String labelvalue=labels.get(j).getText();
-				WebElement Surname=labels.get(j).findElement(By.xpath(properties.getProperty("Surname")));
-				WebElement Forename=labels.get(j).findElement(By.xpath(properties.getProperty("Forename")));
-				WebElement Gender=labels.get(j).findElement(By.xpath(properties.getProperty("Gender")));
-				WebElement Birthdate=labels.get(j).findElement(By.xpath(properties.getProperty("Birthdate")));
-				if(labelvalue.equalsIgnoreCase(persondata.toString()))
+				String persondetailstxtbxvalues=persondetailstxtbx.get(j).getAttribute("name");
+				Matcher match= Pattern.compile("[a-zA-Z0-9]+$").matcher(persondetailstxtbxvalues);
+				match.find();
+				String persondetailstxtbxvalue=match.group();
+				for(int i=0; i<reader.getColumnCount("Person"); i++)
 				{
-					if(labelvalue.equalsIgnoreCase("Surname"))
+					persondata=ExcelReader.datavalue[0][i];
+					if(persondetailstxtbxvalue.trim().equalsIgnoreCase(persondata.toString().trim()))
 					{
-						Surname.sendKeys(ExcelReader.datavalue[1][i].toString());
+						persondetailstxtbx.get(j).sendKeys(ExcelReader.datavalue[1][i].toString());
+						break;
 					}
-					else if(labelvalue.equalsIgnoreCase("Forename 1"))
-					{
-						Forename.sendKeys(ExcelReader.datavalue[1][i].toString());
-					}
-					else if(labelvalue.equalsIgnoreCase("Gender"))
-					{
-						Gender.sendKeys(ExcelReader.datavalue[1][i].toString());
-					}
-					else if(labelvalue.equalsIgnoreCase("Date of Birth"))
-					{
-						Birthdate.sendKeys(ExcelReader.datavalue[1][i].toString());
-					}
-						
 				}
 			}
-		}
 		List <WebElement> nxtbtn= Init.driver.findElements(By.xpath(properties.getProperty("nextbutton")));
  		for(int i=0; i<nxtbtn.size(); i++)
  		{
@@ -63,9 +51,11 @@ public class mdrpersondetails extends CommonUtil
 	
 	public static void mandatepersondetails()
 	{
-		List <WebElement> tabs=Init.driver.findElements(By.xpath(properties.getProperty("tabname")));
+		List <WebElement> tabs=Init.driver.findElements(By.xpath(properties.getProperty("persontab")));
 		for(int k=0; k<tabs.size(); k++)
 		{
+			String tabtext=tabs.get(k).getAttribute("aria-label");
+			System.out.println(tabtext);
 			tabs.get(4).click();
 				reader= new ExcelReader();
 				reader.getCellData("Descriptive_details_Inc_Disabilities","Link type");
