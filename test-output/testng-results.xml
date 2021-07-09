@@ -2,30 +2,30 @@
 <testng-results ignored="0" total="1" passed="0" failed="1" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2021-07-08T13:41:26 BST" name="Default suite" finished-at="2021-07-08T13:45:48 BST" duration-ms="262165">
+  <suite started-at="2021-07-09T07:08:06 BST" name="Default suite" finished-at="2021-07-09T07:12:57 BST" duration-ms="290909">
     <groups>
     </groups>
-    <test started-at="2021-07-08T13:41:26 BST" name="Default test" finished-at="2021-07-08T13:45:48 BST" duration-ms="262165">
+    <test started-at="2021-07-09T07:08:06 BST" name="Default test" finished-at="2021-07-09T07:12:57 BST" duration-ms="290909">
       <class name="dcf.script.stepdef.CA01_Testng">
-        <test-method signature="loginandroles()[pri:0, instance:dcf.script.stepdef.CA01_Testng@4b6166aa]" started-at="2021-07-08T13:41:26 BST" name="loginandroles" finished-at="2021-07-08T13:45:48 BST" duration-ms="262105" status="FAIL">
+        <test-method signature="loginandroles()[pri:0, instance:dcf.script.stepdef.CA01_Testng@f31c0c6]" started-at="2021-07-09T07:08:06 BST" name="loginandroles" finished-at="2021-07-09T07:12:57 BST" duration-ms="290865" status="FAIL">
           <exception class="org.openqa.selenium.ElementNotInteractableException">
             <message>
               <![CDATA[element not interactable
   (Session info: chrome=91.0.4472.124)
 Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
-System info: host: 'MUM-LAP-700250', ip: '172.29.146.96', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '11.0.6'
+System info: host: 'MUM-LAP-700250', ip: '172.29.148.43', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '11.0.6'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 91.0.4472.124, chrome: {chromedriverVersion: 91.0.4472.101 (af52a90bf870..., userDataDir: C:\Users\ANIKET~1.PAR\AppDa...}, goog:chromeOptions: {debuggerAddress: localhost:50518}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
-Session ID: 20dabb4a6b1d5b0616e213c9649bfb33]]>
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 91.0.4472.124, chrome: {chromedriverVersion: 91.0.4472.101 (af52a90bf870..., userDataDir: C:\Users\ANIKET~1.PAR\AppDa...}, goog:chromeOptions: {debuggerAddress: localhost:54538}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: daa9547d8e6e29f656380f887cbbe542]]>
             </message>
             <full-stacktrace>
               <![CDATA[org.openqa.selenium.ElementNotInteractableException: element not interactable
   (Session info: chrome=91.0.4472.124)
 Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
-System info: host: 'MUM-LAP-700250', ip: '172.29.146.96', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '11.0.6'
+System info: host: 'MUM-LAP-700250', ip: '172.29.148.43', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '11.0.6'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 91.0.4472.124, chrome: {chromedriverVersion: 91.0.4472.101 (af52a90bf870..., userDataDir: C:\Users\ANIKET~1.PAR\AppDa...}, goog:chromeOptions: {debuggerAddress: localhost:50518}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
-Session ID: 20dabb4a6b1d5b0616e213c9649bfb33
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 91.0.4472.124, chrome: {chromedriverVersion: 91.0.4472.101 (af52a90bf870..., userDataDir: C:\Users\ANIKET~1.PAR\AppDa...}, goog:chromeOptions: {debuggerAddress: localhost:54538}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: daa9547d8e6e29f656380f887cbbe542
 at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
 at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
 at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
@@ -37,8 +37,8 @@ at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.ja
 at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
 at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
 at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:285)
-at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:84)
-at dcf.script.common.mdrpersondetails.persondetails(mdrpersondetails.java:46)
+at org.openqa.selenium.remote.RemoteWebElement.sendKeys(RemoteWebElement.java:106)
+at dcf.script.common.mdrpersondetails.persondetails(mdrpersondetails.java:38)
 at dcf.script.init.Init.cardlist(Init.java:124)
 at dcf.script.stepdef.CA01_Testng.loginandroles(CA01_Testng.java:16)
 at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)

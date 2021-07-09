@@ -40,12 +40,22 @@ public class mdrpersondetails extends CommonUtil
 					}
 				}
 			}
-		List <WebElement> nxtbtn= Init.driver.findElements(By.xpath(properties.getProperty("nextbutton")));
- 		for(int i=0; i<nxtbtn.size(); i++)
- 		{
- 			nxtbtn.get(1).click();
- 		}
-		waitForElementToBe(By.xpath(properties.getProperty("Noneofthese")), "VISIBLE", Init.driver, 25);
+			try
+			{
+				List <WebElement> nxtbtn= Init.driver.findElements(By.xpath(properties.getProperty("nextbutton")));
+				CommonUtil.waitForElementToBe(By.xpath(properties.getProperty("nextbutton")), "PRESENCE", Init.driver, 30);
+				for(int i=0; i<nxtbtn.size(); i++)
+				{
+					nxtbtn.get(1).click();
+					break;
+				}
+			}
+			catch(Exception e)
+			{
+				e.getStackTrace();
+			}
+			
+		waitForElementToBe(By.xpath(properties.getProperty("Noneofthese")), "PRESENCE", Init.driver, 25);
 		Init.driver.findElement(By.xpath(properties.getProperty("Noneofthese")));
 	}
 	
