@@ -13,7 +13,9 @@ import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.asserts.SoftAssert;
-import dcf.script.common.mdrpersondetails;
+
+import dcf.script.common.Offences;
+import dcf.script.common.Person;
 import dcf.script.utility.CommonUtil;
 import dcf.script.utility.ExcelReader;
 import io.github.bonigarcia.wdm.OperatingSystem;
@@ -22,11 +24,13 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class Init 
 {
 	public static SoftAssert soft;
+	public static Object carddata;
 	public static RemoteWebDriver driver;
 	private static Properties properties;
 	public static boolean goCards = true;
 	public static ExcelReader reader=new ExcelReader();
-	public static mdrpersondetails persondetails= new mdrpersondetails();
+	public static Person persondetails= new Person();
+	public static Offences off=new Offences();
 	
 	public static RemoteWebDriver getDriver() 
 	{
@@ -75,7 +79,8 @@ public class Init
 		}
 		WebElement BtnSubmit = driver.findElement(By.xpath(properties.getProperty("BtnSubmit")));
 		BtnSubmit.click();
-		Thread.sleep(500);
+		Thread.sleep(5500);
+		CommonUtil.waitForElementToBe((By.id("splashScreenBtnOk")), "VISIBLE", driver, 350);
 		WebElement BtnAccept= driver.findElement(By.id("splashScreenBtnOk")); 
 		BtnAccept.click();
 		Thread.sleep(500);
@@ -110,19 +115,34 @@ public class Init
 			public static void cardlist() throws Exception
 			{
 				CommonUtil.switchmobileframe();
-				reader.getCellData("CaseIcon","CardName");
 				List <WebElement> cardlist=driver.findElements(By.xpath(properties.getProperty("cardthumbnail")));
 				for(int i=0; i<cardlist.size(); i++)
 				{
-					Object cardvalue=ExcelReader.datavalue[1][0];
+					reader.getCellData("CaseIcon","CardName");
+					carddata=reader.datavalue;
 					String cardname=cardlist.get(i).getText();
 					String[] splitStr = cardname.split("\\s+");
-					if(cardvalue.toString().equalsIgnoreCase(splitStr[0]))
+					for(int j=0; j<reader.getRowCount("CaseIcon"); j++)
 					{
-						cardlist.get(i).click();
-						CommonUtil.cardrequired();
-						mdrpersondetails.persondetails();
-						mdrpersondetails.mandatepersondetails();
+						carddata=reader.datavalue[j][0];
+						if(carddata.toString().equalsIgnoreCase(splitStr[0]))
+						{
+							if(splitStr[0].equalsIgnoreCase("Defendant"))
+							{
+								cardlist.get(i).click();
+								CommonUtil.cardrequired();
+								CommonUtil.yellowpages();
+								Person.persondetails();
+								Person.mandatepersondetails();
+								break;
+							}
+							else if(splitStr[0].equalsIgnoreCase("offence(s)"))
+							{
+								cardlist.get(i).click();
+								off.offencedetails();
+								
+							}
+						}
 					}
 				}
 			}

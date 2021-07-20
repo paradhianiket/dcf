@@ -237,6 +237,14 @@ public class CommonUtil
 		{ 
 			switchmobileframe();
 			((JavascriptExecutor) Init.driver).executeScript("document.cookie=\"eag-gotitnotes-disabled=true\";");
+			
+			//GlobalAjax.setTimeout(3000000);
+		}
+//yellowpages
+		public static void yellowpages()
+		{
+			switchmobileframe();
+			((JavascriptExecutor) Init.driver).executeScript("GlobalAjax.setTimeout(3000000)");
 		}
 
 //yescardrequired

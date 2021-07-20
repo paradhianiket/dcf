@@ -1,5 +1,8 @@
 D:\dcf_script\src\test\java\dcf\script\stepdef\CA01.java
 D:\dcf_script\src\test\java\dcf\script\utility\CommonUtil.java
+D:\dcf_script\src\test\java\dcf\script\stepdef\Investigation.java
+D:\dcf_script\src\test\java\dcf\script\common\mdrpersondetails.java
 D:\dcf_script\src\test\java\dcf\script\init\Init.java
+D:\dcf_script\src\test\java\dcf\script\stepdef\CA01_Testng.java
 D:\dcf_script\src\test\java\dcf\script\testRunner\TestRunner_DC01.java
 D:\dcf_script\src\test\java\dcf\script\utility\ExcelReader.java

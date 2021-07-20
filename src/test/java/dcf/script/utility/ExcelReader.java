@@ -18,6 +18,7 @@ public class ExcelReader extends CommonUtil
 	public static XSSFRow Row;
 	public static XSSFCell Cell;
 	public static Object[][] datavalue=null;
+	public static String []shtname=null;
 	public static Object myObj;
 	public static Object myObj1;
 	public static String sheetName=null;
@@ -25,7 +26,7 @@ public class ExcelReader extends CommonUtil
 	public static int colcount=0;
 	
 //string fis
-public FileInputStream fisexcelreader() 
+public static FileInputStream fisexcelreader() 
 {
 	String tdFileName = properties.getProperty(filename);
 	File filename1 = new File(TESTDATA_FOLDER + tdFileName);
@@ -44,7 +45,7 @@ public FileInputStream fisexcelreader()
 }
 	
 // returns sheet number
-		public int getsheetnumber()
+		public static int getsheetnumber()
 		{
 			int sheetnumber = workbook.getNumberOfSheets();
 			return sheetnumber;
@@ -67,17 +68,18 @@ public FileInputStream fisexcelreader()
 			//System.out.println(colcount);
 			return colcount;
 		}
+		
 //return sheetname
-		public String sheetname()
+		public static String[] sheetname()
 		{
 			fisexcelreader();
+			shtname= new String[getsheetnumber()];
 			for(int i=0; i<getsheetnumber(); i++)
 			{
-				sheet = workbook.getSheetAt(i);
-				sheetName=sheet.getSheetName();
+				sheet= workbook.getSheetAt(i);	
+				shtname[i]=sheet.getSheetName();
 			}
-			return sheetName;
-			
+			return shtname;
 		}
 
 //returns the data from a cell
@@ -96,7 +98,6 @@ public FileInputStream fisexcelreader()
 					for(int j=0; j<getColumnCount(sheetName); j++, cj++)
 					{
 						datavalue[ci][cj]=sheet.getRow(i).getCell(j).getStringCellValue();
-						//System.out.println(datavalue[ci][cj]);
 					}
 				}
 			}
